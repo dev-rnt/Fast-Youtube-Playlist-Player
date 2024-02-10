@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Player</title>
+</head>
+<body>
+    <h1>Fast single youtube video player for low end PCs</h1>
+    <label for="videoUrl">Enter YouTube Video URL:</label>
+    <input type="text" id="videoUrl" placeholder="Enter YouTube video URL">
+   
+    <button onclick="changeVideo()">Change Video</button>
+    <br>
+    <br>
+    <div id="videoContainer"></div>
+
+    <script>
+        function changeVideo() {
+            var videoUrl = document.getElementById("videoUrl").value;
+
+            // Extract the video ID from the YouTube URL
+            var videoId = extractVideoId(videoUrl);
+
+            if (videoId) {
+                // Create the YouTube embed code with the extracted video ID
+                var embedCode = '<iframe width="660" height="415" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allowfullscreen></iframe>';
+                
+                // Display the YouTube video in the videoContainer div
+                document.getElementById("videoContainer").innerHTML = embedCode;
+            } else {
+                alert('Invalid YouTube video URL. Please enter a valid URL.');
+            }
+        }
+
+        function extractVideoId(url) {
+            // Extract video ID from various YouTube URL formats
+            var match = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+            if (match) {
+                return match[1];
+            }
+
+            // Check if the URL is in the short format (youtu.be)
+            var shortFormatMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+            return shortFormatMatch ? shortFormatMatch[1] : null;
+        }
+    </script>
+</body>
+</html>

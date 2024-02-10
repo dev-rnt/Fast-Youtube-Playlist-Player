@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Playlist</title>
+</head>
+<body>
+<h1>Fast youtube playlist video player for low end pcs</h1>
+    <label for="playlistUrl">Enter YouTube Playlist URL:</label>
+    <input type="text" id="playlistUrl" placeholder="Enter YouTube playlist URL">
+
+    <button onclick="changePlaylist()">Change Playlist</button>
+    <br>
+    <br>
+    <br>
+    <div id="playlistContainer"></div>
+
+    <script>
+        function changePlaylist() {
+            var playlistUrl = document.getElementById("playlistUrl").value;
+
+            // Extract the playlist ID from the YouTube playlist URL
+            var playlistId = extractPlaylistId(playlistUrl);
+
+            if (playlistId) {
+                // Create the YouTube embed code for the playlist
+                var embedCode = '<iframe width="100%" height="615" src="https://www.youtube.com/embed/videoseries?list=' + playlistId + '" frameborder="0" allowfullscreen></iframe>';
+                
+                // Display the YouTube playlist in the playlistContainer div
+                document.getElementById("playlistContainer").innerHTML = embedCode;
+            } else {
+                alert('Invalid YouTube playlist URL. Please enter a valid URL.');
+            }
+        }
+
+        function extractPlaylistId(url) {
+            // Extract playlist ID from various YouTube URL formats
+            var match = url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+            return match ? match[1] : null;
+        }
+    </script>
+</body>
+</html>
